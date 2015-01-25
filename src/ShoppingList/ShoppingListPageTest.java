@@ -19,7 +19,7 @@ public class ShoppingListPageTest {
 		shoppinglist.addItemToList("Kiwis", 2);
 		Thread.sleep(2500);
 		
-		shoppinglist.deleteItemFromPage("Grapes");
+		shoppinglist.deleteAllItemsFromThePage();
 		Thread.sleep(5000);
 		
 		shoppinglist.close();

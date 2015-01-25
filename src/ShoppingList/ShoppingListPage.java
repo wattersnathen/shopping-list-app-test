@@ -53,19 +53,29 @@ public class ShoppingListPage {
 		PageFactory.initElements(this.driver, this);
 	}
 	
-	/**
-	 * Load this page. Calls the WebDriver.get(URL) method.
-	 */
-	public void load() {
-		this.driver.get(url);
-	}
-	
-	/**
-	 * Close this page. Calls the WebDriver.close() method.
-	 */
-	public void close() {
-		this.driver.close();
-	}
+    /**
+     * Public access to all of the items on the current page.
+     * @return list of WebElements found on the page when function was called
+     */
+    public List<WebElement> getAllItemsOnPage() {
+        return this.driver.findElements(By.className("item"));
+    }
+    
+    /**
+     * Get a reference to an item on the page if it exists.
+     * @param itemToFind text value of the item to find 
+     * @return the WebElement if found, otherwise return null
+     */
+    public WebElement findItemOnPage(String itemToFind) {
+        List<WebElement> itemsOnPage = getAllItemsOnPage();
+        for (WebElement item : itemsOnPage) {
+            if (item.findElement(By.cssSelector("input[type='text']")).getAttribute("value").equals(itemToFind)) {
+                return item;
+            }
+        }
+        
+        return null; // Item was not found on the page
+    }
 	
 	/**
 	 * Add an item to the items list.
@@ -74,9 +84,13 @@ public class ShoppingListPage {
 	 */
 	public void addItemToList(String itemToAdd, int itemQuantity) {
 		this.enterItem.sendKeys(itemToAdd);
-		
 		// the enterQuantity input has been defaulted to a value of 1, clear it first
 		this.enterQuantity.clear();
+		
+		// itemQuantity field must be 1 or greater. Default to 1 if value less than 1 is issued.
+		if (itemQuantity < 1) {
+		    this.enterQuantity.sendKeys("1");
+		}
 		this.enterQuantity.sendKeys(Integer.toString(itemQuantity));
 		this.addItem.click();
 	}
@@ -94,30 +108,28 @@ public class ShoppingListPage {
 	    else {
 	        
 	    }
-		
 	}
 	
 	/**
-	 * Public access to all of the items on the current page.
-	 * @return list of WebElements found on the page when function was called
+	 * Click the 'Clear List(s)' button to remove all items from the page.
+	 * NOTE: Also destroys the localStorage API data -- which is a feature of the site itself.
 	 */
-	public List<WebElement> getAllItemsOnPage() {
-	    return this.driver.findElements(By.className("item"));
+	public void deleteAllItemsFromThePage() {
+	    this.clearLists.click();
 	}
 	
-	/**
-	 * Get a reference to an item on the page.
-	 * @param itemToFind text value of the item to find 
-	 * @return the WebElement if found, otherwise return null
-	 */
-	public WebElement findItemOnPage(String itemToFind) {
-	    List<WebElement> itemsOnPage = getAllItemsOnPage();
-	    for (WebElement item : itemsOnPage) {
-	        if (item.findElement(By.cssSelector("input[type='text']")).getAttribute("value").equals(itemToFind)) {
-	            return item;
-	        }
-	    }
-	    
-	    return null; // Item was not found on the page
-	}
+    /**
+     * Load this page. Calls the WebDriver.get(URL) method.
+     */
+    public void load() {
+        this.driver.get(url);
+    }
+    
+    /**
+     * Close this page. Calls the WebDriver.close() method.
+     */
+    public void close() {
+        this.driver.close();
+    }
+
 }
