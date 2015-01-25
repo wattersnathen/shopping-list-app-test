@@ -12,11 +12,11 @@ Tests currently support:
 <li>Deleting all items from the page (Clear List(s) button functionality)</li>
 <li>Implemented the checkbox functionality</li>
 <li>Move item back and forth between lists (by clicking checkbox)</li>
+<li>Edit an individual item</li>
 </ul>
 
 Tests under construction:
 <ul>
 <li>Saving the state of the list(s)</li>
-<li>Edit an individual item</li>
 <li>Move item back and forth between lists (by dragging and dropping)</li>
 </ul>
