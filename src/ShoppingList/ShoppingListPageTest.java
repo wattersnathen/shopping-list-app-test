@@ -3,9 +3,7 @@ package ShoppingList;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.junit.Test;
 
-import static org.junit.Assert.*;
 import ShoppingList.ShoppingListPage;
 
 public class ShoppingListPageTest {
@@ -21,7 +19,17 @@ public class ShoppingListPageTest {
         shoppinglist.addItemToList("Cat Food", 1);
         
         WebElement kiwis = shoppinglist.addItemToList("Kiwis", 2);
-        Thread.sleep(2500);
+        
+        Thread.sleep(3000);
+        
+        shoppinglist.clickItemCheckbox(kiwis);
+        shoppinglist.clickItemCheckbox("Grapes");
+        
+        Thread.sleep(3000);
+        
+        shoppinglist.clickItemCheckbox(kiwis);
+        
+        Thread.sleep(3000);
         
         shoppinglist.deleteItemFromPage("Oranges");
         shoppinglist.deleteItemFromPage(kiwis);
