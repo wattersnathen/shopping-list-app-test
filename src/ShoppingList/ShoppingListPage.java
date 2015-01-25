@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ShoppingListPage {
 	
@@ -41,6 +43,7 @@ public class ShoppingListPage {
     private WebElement purchasedList;
      
     private String url = "http://wattersnathen.github.io/shopping-list-app/";
+    private String pageTitle = "Shopping List App";
     private WebDriver driver;
     
     /**
@@ -185,6 +188,8 @@ public class ShoppingListPage {
      */
     public void load() {
         this.driver.get(url);
+        WebDriverWait wait = new WebDriverWait(this.driver, 15);
+        wait.until(ExpectedConditions.titleIs(pageTitle));
     }
     
     /**
