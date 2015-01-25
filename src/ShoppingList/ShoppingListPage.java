@@ -74,7 +74,9 @@ public class ShoppingListPage {
 	 */
 	public void addItemToList(String itemToAdd, int itemQuantity) {
 		this.enterItem.sendKeys(itemToAdd);
-		this.enterQuantity.clear(); // the enterQuantity input has been defaulted to a value of 1, clear it first
+		
+		// the enterQuantity input has been defaulted to a value of 1, clear it first
+		this.enterQuantity.clear();
 		this.enterQuantity.sendKeys(Integer.toString(itemQuantity));
 		this.addItem.click();
 	}
@@ -84,23 +86,38 @@ public class ShoppingListPage {
 	 * @param itemToDelete
 	 */
 	public void deleteItemFromPage(String itemToDelete) {
+	    WebElement deletableItem = findItemOnPage(itemToDelete);
+	    if (deletableItem != null) {
+	        deletableItem.findElement(By.cssSelector(".btn-delete")).click();
+	    }
+	    // TODO: implement handler for when the item isn't found on the page.
+	    else {
+	        
+	    }
 		
-		// grab all items on the current page
-		List<WebElement> itemsOnPage = this.driver.findElements(By.className("item"));
-		for (WebElement item : itemsOnPage) {
-			
-			// our item text is found in the value attribute of the text input field
-			if (item.findElement(By.cssSelector("input[type='text']")).getAttribute("value").equals(itemToDelete)) {
-				
-				// found the itemtoDelete on the page, find and click its delete button
-				item.findElement(By.cssSelector(".btn-delete")).click();
-				
-				// no need to continue searching through the items
-				break;
-			}
-		}
-
 	}
 	
+	/**
+	 * Public access to all of the items on the current page.
+	 * @return list of WebElements found on the page when function was called
+	 */
+	public List<WebElement> getAllItemsOnPage() {
+	    return this.driver.findElements(By.className("item"));
+	}
 	
+	/**
+	 * Get a reference to an item on the page.
+	 * @param itemToFind text value of the item to find 
+	 * @return the WebElement if found, otherwise return null
+	 */
+	public WebElement findItemOnPage(String itemToFind) {
+	    List<WebElement> itemsOnPage = getAllItemsOnPage();
+	    for (WebElement item : itemsOnPage) {
+	        if (item.findElement(By.cssSelector("input[type='text']")).getAttribute("value").equals(itemToFind)) {
+	            return item;
+	        }
+	    }
+	    
+	    return null; // Item was not found on the page
+	}
 }
