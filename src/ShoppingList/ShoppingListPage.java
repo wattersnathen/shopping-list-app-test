@@ -98,6 +98,23 @@ public class ShoppingListPage {
     }
     
     /**
+     * Click the checkbox on the item
+     * @param itemToClick
+     */
+    public void clickItemCheckbox(String itemToClick) {
+        WebElement item = findItemOnPage(itemToClick);
+        item.findElement(By.cssSelector("input[type='checkbox']")).click();
+    }
+    
+    /**
+     * Use a WebElement reference to click the checkbox
+     * @param item
+     */
+    public void clickItemCheckbox(WebElement item) {
+        item.findElement(By.cssSelector("input[type='checkbox']")).click();
+    }
+    
+    /**
      * Delete item from the shopping list application.
      * @param itemToDelete
      */
@@ -106,12 +123,12 @@ public class ShoppingListPage {
         if (deletableItem != null) {
             deletableItem.findElement(By.cssSelector(".btn-delete")).click();
         }
-        // TODO: implement handler for when the item isn't found on the page.
-        else {
-            
-        }
     }
     
+    /**
+     * Delete an item from the page
+     * @param elementToDelete WebElement reference
+     */
     public void deleteItemFromPage(WebElement elementToDelete) {
         elementToDelete.findElement(By.cssSelector(".btn-delete")).click();
     }
