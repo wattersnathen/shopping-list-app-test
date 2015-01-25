@@ -115,6 +115,45 @@ public class ShoppingListPage {
     }
     
     /**
+     * Edit an item that is currently on the page
+     * @param itemToEdit
+     * @param updatedText
+     * @param updatedQty
+     * @return
+     */
+    public WebElement editItem(String itemToEdit, String updatedText, int updatedQty) {
+        WebElement item = toggleItemEditable(itemToEdit); // must make it editable first
+        WebElement text = item.findElement(By.cssSelector("input[type='text']"));
+        WebElement qty  = item.findElement(By.cssSelector("input[type='number']"));
+        text.clear();
+        text.sendKeys(updatedText);
+        qty.clear();
+        qty.sendKeys(Integer.toString(updatedQty));
+        return toggleItemEditable(item);
+    }
+    
+    /**
+     * Click the 'Edit' input button
+     * @param itemToEdit
+     * @return
+     */
+    private WebElement toggleItemEditable(String itemToEdit) {
+        WebElement item = findItemOnPage(itemToEdit);
+        item.findElement(By.cssSelector(".btn-edit")).click();
+        return item;
+    }
+    
+    /**
+     * Click the 'Edit' input button
+     * @param item
+     * @return
+     */
+    private WebElement toggleItemEditable(WebElement item) {
+        item.findElement(By.cssSelector(".btn-edit")).click();
+        return item;
+    }
+    
+    /**
      * Delete item from the shopping list application.
      * @param itemToDelete
      */
