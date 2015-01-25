@@ -73,7 +73,6 @@ public class ShoppingListPage {
                 return item;
             }
         }
-    
         return null; // Item was not found on the page
     }
     
@@ -81,8 +80,9 @@ public class ShoppingListPage {
      * Add an item to the items list.
      * @param itemToAdd 
      * @param itemQuantity
+     * @return WebElement that was added
      */
-    public void addItemToList(String itemToAdd, int itemQuantity) {
+    public WebElement addItemToList(String itemToAdd, int itemQuantity) {
         this.enterItem.sendKeys(itemToAdd);
         // the enterQuantity input has been defaulted to a value of 1, clear it first
         this.enterQuantity.clear();
@@ -93,6 +93,8 @@ public class ShoppingListPage {
         }
         this.enterQuantity.sendKeys(Integer.toString(itemQuantity));
         this.addItem.click();
+        
+        return findItemOnPage(itemToAdd);
     }
     
     /**
@@ -108,6 +110,10 @@ public class ShoppingListPage {
         else {
             
         }
+    }
+    
+    public void deleteItemFromPage(WebElement elementToDelete) {
+        elementToDelete.findElement(By.cssSelector(".btn-delete")).click();
     }
     
     /**
@@ -131,5 +137,4 @@ public class ShoppingListPage {
     public void close() {
         this.driver.close();
     }
-
 }
